@@ -1,0 +1,70 @@
+﻿@using SeatingChart.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    ViewBag.ReturnUrl = "~/Home/Admin";
+}
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand navbar-light navbar-white">
+    <div class="container">
+        <div class="navbar-brand">
+            <img src="~/Content/Images/wccca.png" alt="WCCCA Logo" class="brand-image elevation-3"
+                 style="opacity: .8; height:75px; width:125px; margin-right:1em">
+            <span class="font-weight-light ">WCCCA Seating Chart</span>
+        </div>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+            </li>
+            <li class="nav-item">
+                <a href="../Home/Index" class="nav-link">Home</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- /.navbar -->
+
+<div class="row" style="margin-left:50px">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-4">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-4">
+                        <input type="submit" value="Log in" class="btn btn-default" />
+                    </div>
+                </div>
+                <p>
+                    @Html.ActionLink("Register as a new user", "Register")
+                </p>
+                @* Enable this once you have account confirmation enabled for password reset functionality
+                    <p>
+                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                    </p>*@
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

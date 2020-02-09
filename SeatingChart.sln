@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeatingChart", "SeatingChart.csproj", "{055A033F-0EE4-4C3A-B72F-B2578DEE968D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{055A033F-0EE4-4C3A-B72F-B2578DEE968D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{055A033F-0EE4-4C3A-B72F-B2578DEE968D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{055A033F-0EE4-4C3A-B72F-B2578DEE968D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{055A033F-0EE4-4C3A-B72F-B2578DEE968D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA27EC0D-77D7-4DBD-BE44-5E56F337B8C9}
+	EndGlobalSection
+EndGlobal

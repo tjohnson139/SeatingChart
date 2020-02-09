@@ -1,0 +1,97 @@
+﻿@model IEnumerable<SeatingChart.Models.EmployeeModels>
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="width:12em">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="info">
+                <div class="d-block" style="color:white">@Html.DisplayFor(modelItem => User.Identity.Name)</div>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+                <li class="nav-item has-treeview">
+                    <a href="/Employee/Index" class="nav-link">
+                        <i class="nav-icon fas fa-tree"></i>
+                        <p>
+                            Employees
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="/Account/Register" class="nav-link">
+                        <i class="nav-icon fas fa-tree"></i>
+                        <p>
+                            New Admin User
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Reports
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                </li>
+                <li style="margin-top:20em">
+                    @Html.Partial("_LoginPartial")
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+
+<div class="userTable">
+    <table class="table">
+        <tr>
+            <th style="border-top: none">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th> 
+            <th style="border-top: none">
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th style="border-top: none">
+                @Html.DisplayNameFor(model => model.DisplayName)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (item.NotActive != true)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DisplayName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+    <div class="notauthorized" style="margin-top:1em;">
+        <a href="../Employee/Create" class="btn btn-default">Create New Employee</a>
+        <a href="../Home/Admin" class="btn btn-default" style="margin-left:1em;">Back to Seating Chart</a>
+    </div>
+</div>
