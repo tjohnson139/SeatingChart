@@ -17,7 +17,14 @@ namespace SeatingChart.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            return View(db.EmployeeModels.ToList());
+            if (User.Identity.IsAuthenticated)
+            {
+                return View(db.EmployeeModels.ToList());
+            }
+            else
+            {
+                return View("NotAuthorized");
+            }
         }
 
         // GET: Employee/Details/5
@@ -38,7 +45,14 @@ namespace SeatingChart.Controllers
         // GET: Employee/Create
         public ActionResult Create()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return View("NotAuthorized");
+            }
         }
 
         // POST: Employee/Create
@@ -61,6 +75,10 @@ namespace SeatingChart.Controllers
         // GET: Employee/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (User.Identity.IsAuthenticated == false)
+            {
+                return View("NotAuthorized");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -92,10 +110,15 @@ namespace SeatingChart.Controllers
         // GET: Employee/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (User.Identity.IsAuthenticated == false)
+            {
+                return View("NotAuthorized");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             EmployeeModels employeeModels = db.EmployeeModels.Find(id);
             if (employeeModels == null)
             {
@@ -110,7 +133,7 @@ namespace SeatingChart.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             EmployeeModels employeeModels = db.EmployeeModels.Find(id);
-            db.Entry(employeeModels).State = EntityState.Modified;
+            employeeModels.NotActive = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -122,6 +145,23 @@ namespace SeatingChart.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Register()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return View("NotAuthorized");
+            }
+        }
+
+        public ActionResult NotAuthorized()
+        {
+            return View();
         }
     }
 }

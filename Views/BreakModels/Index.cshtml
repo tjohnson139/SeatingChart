@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SeatingChart.Models.BreakModels>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <table class="table">    
+    @foreach (var item in Model)
+    {
+        if (item.TimeCleared == null)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeModels.DisplayName)
+            </td>
+            <td>
+                @item.TimeEntered.ToString("HHmm")
+            </td>
+        </tr>
+
+        }
+    }
+    </table>
+</body>
+</html>

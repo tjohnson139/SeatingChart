@@ -13,20 +13,6 @@ namespace SeatingChart.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         public ActionResult Login()
         {
             return View();
@@ -45,8 +31,52 @@ namespace SeatingChart.Controllers
         }
         public ActionResult Register()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return View("NotAuthorized");
+            }
         }
+
+        public ActionResult Edit()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return View("NotAuthorized");
+            }
+        }
+
+        public ActionResult Delete()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return View("NotAuthorized");
+            }
+        }
+
+        public ActionResult Create()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return View("NotAuthorized");
+            }
+        }
+
 
         public ActionResult NotAuthorized()
         {

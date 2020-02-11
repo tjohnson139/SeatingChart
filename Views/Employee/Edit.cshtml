@@ -1,62 +1,9 @@
 ﻿@model SeatingChart.Models.EmployeeModels
 
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="width:12em">
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="info">
-                <div class="d-block" style="color:white">@Html.DisplayFor(modelItem => User.Identity.Name)</div>
-            </div>
-        </div>
+@if (User.Identity.IsAuthenticated)
+{
 
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                with font-awesome or any other icon font library -->
-                <li class="nav-item has-treeview">
-                    <a href="/Employee/Index" class="nav-link">
-                        <i class="nav-icon fas fa-tree"></i>
-                        <p>
-                            Employees
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item has-treeview">
-                    <a href="/Account/Register" class="nav-link">
-                        <i class="nav-icon fas fa-tree"></i>
-                        <p>
-                            New Admin User
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-edit"></i>
-                        <p>
-                            Reports
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                </li>
-                <li style="margin-top:20em">
-                    @Html.Partial("_LoginPartial")
-                </li>
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-</aside>
-
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-</div>
-<!-- /.content-wrapper -->
+}
 
 
 @using (Html.BeginForm())
@@ -64,7 +11,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal userTable">
-        <h4>Edit Employee</h4>
+        <h4>Edit @Html.DisplayFor(modelItem => modelItem.FirstName) @Html.DisplayFor(modelItem => modelItem.LastName)</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -104,5 +51,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-</body>
-</html>

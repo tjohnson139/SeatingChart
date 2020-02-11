@@ -136,11 +136,18 @@ namespace SeatingChart.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return View("NotAuthorized");
+            }
         }
+
 
         //
         // POST: /Account/Register
@@ -155,15 +162,14 @@ namespace SeatingChart.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    return RedirectToAction("Admin", "Home");
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Home", "Admin");
                 }
                 AddErrors(result);
             }
@@ -421,6 +427,35 @@ namespace SeatingChart.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        public ActionResult Index()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return View("NotAuthorized");
+            }
+        }
+
+        public ActionResult UserList()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return View("NotAuthorized");
+            }
+        }
+
+        public ActionResult NotAuthorized()
+        {
+            return View();
         }
 
         #region Helpers

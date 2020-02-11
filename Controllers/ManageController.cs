@@ -187,7 +187,7 @@ namespace SeatingChart.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
+                return RedirectToAction("Index", "Account");
             }
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "Failed to verify phone");
@@ -226,6 +226,10 @@ namespace SeatingChart.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
+            if (User.Identity.IsAuthenticated == false)
+            {
+                return View("NotAuthorized");
+            }
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -238,7 +242,7 @@ namespace SeatingChart.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Admin", "Home");
             }
             AddErrors(result);
             return View(model);

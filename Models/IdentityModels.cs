@@ -34,5 +34,7 @@ namespace SeatingChart.Models
         }
 
         public System.Data.Entity.DbSet<SeatingChart.Models.EmployeeModels> EmployeeModels { get; set; }
+
+        public System.Data.Entity.DbSet<SeatingChart.Models.BreakModels> BreakModels { get; set; }
     }
 }

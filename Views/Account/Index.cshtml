@@ -1,0 +1,34 @@
+﻿@model IEnumerable<SeatingChart.Models.ApplicationUser>
+
+@if (User.Identity.IsAuthenticated)
+{
+
+}
+
+<div class="userTable">
+    <table class="table">
+        <tr>
+            <th style="border-top: none">
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="notauthorized" style="margin-top:1em;">
+        <a href="../Employee/Create" class="btn btn-default">Create New Employee</a>
+        <a href="../Home/Admin" class="btn btn-default" style="margin-left:1em;">Back to Seating Chart</a>
+    </div>
+</div>

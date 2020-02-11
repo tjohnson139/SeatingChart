@@ -1,20 +1,8 @@
-﻿<!-- Navbar -->
-<nav class="navbar navbar-expand navbar-light navbar-white">
-    <div class="container">
-        <div class="navbar-brand">
-            <img src="~/Content/Images/wccca.png" alt="WCCCA Logo" class="brand-image elevation-3"
-                 style="opacity: .8; height:75px; width:125px; margin-right:1em">
-            <span class="font-weight-light ">WCCCA Seating Chart</span>
-        </div>
+﻿@{
+    Layout = null;
+}
+@Html.Partial("_Header")
 
-        <!-- Right navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-            </li>
-            <li class="nav-item">
-                <a href="../Account/Login" class="nav-link">Login</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<!-- /.navbar -->
+<div container class="col-md-8">
+    @Html.Partial("Index", "BreakModels")
+</div>
