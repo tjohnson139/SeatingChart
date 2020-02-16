@@ -7,6 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SeatingChart.Models;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
 
 namespace SeatingChart.Controllers
 {
@@ -104,6 +109,5 @@ namespace SeatingChart.Controllers
             }
             base.Dispose(disposing);
         }
-
     }
 }
