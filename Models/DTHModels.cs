@@ -8,26 +8,31 @@ using System.Web.Mvc;
 
 namespace SeatingChart.Models
 {
-    public class BreakModels
+    public class DTHModels
     {
         [Key]
         [Required]
-        [Display(Name = "Break Database ID")]
-        public int BreakId { get; set; }
+        [Display(Name = "DTH Database ID")]
+        public int DthId { get; set; }
 
         [Required]
         [ForeignKey("EmployeeModels")]
         [Display(Name = "Display Name")]
-        public int Employee { get; set; }
+        public int EmployeeDth { get; set; }
 
         [Required]
         [Display(Name = "Time on the List")]
-        public DateTime TimeEntered { get; set; }
+        public DateTime TimeEnteredDth { get; set; }
 
         [Required]
         [Display(Name = "Time cleared from the list")]
-        public DateTime? TimeCleared { get; set; }
+        public DateTime? TimeClearedDth { get; set; }
+
+        [Required]
+        [Display(Name = "Position")]
+        public int PositionDth { get; set; }
 
         public virtual EmployeeModels EmployeeModels { get; set; }
+        public virtual PositionModels PositionModels { get; set; }
     }
 }

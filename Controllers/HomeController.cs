@@ -21,10 +21,37 @@ namespace SeatingChart.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            return View(db.BreakModels.ToList());
+
+        var breaks = db.BreakModels
+                            .Include("Employee")
+                            .Include("TimeEntered")
+                            .Include("TimeCleared")
+                            .Include("DisplayName")
+                            .Select(a => new HomeIndexViewModels
+                            {
+                                Employee = a.Employee,
+                                DisplayName = a.EmployeeModels.DisplayName,
+                                TimeEntered = a.TimeEntered,
+                                TimeCleared = a.TimeCleared.Value,
+                            });
+        return View(breaks);
+
         }
 
-        public ActionResult Login()
+        public ActionResult DropDown()
+        {
+        var nameDrop = db.EmployeeModels
+                            .Include("DisplayName")
+                            .Include("NotActive")
+                            .Select(a => new HomeIndexViewModels {
+                                DisplayName = a.DisplayName,
+                                NotActive = a.NotActive,
+                            });
+            
+        return View(nameDrop);
+        }
+
+            public ActionResult Login()
         {
             return View();
         }

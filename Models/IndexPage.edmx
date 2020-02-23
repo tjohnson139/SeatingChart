@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="IndexModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BreakModels">
+          <Key>
+            <PropertyRef Name="BreakId" />
+          </Key>
+          <Property Name="BreakId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Employee" Type="int" Nullable="false" />
+          <Property Name="TimeEntered" Type="datetime" Nullable="false" />
+          <Property Name="TimeCleared" Type="datetime" />
+          <Property Name="Position" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="EmployeeModels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="DisplayName" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NotActive" Type="bit" />
+          <Property Name="Force" Type="int" />
+        </EntityType>
+        <Association Name="FK_BreakModels_EmployeeModels">
+          <End Role="EmployeeModels" Type="Self.EmployeeModels" Multiplicity="1" />
+          <End Role="BreakModels" Type="Self.BreakModels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeModels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BreakModels">
+              <PropertyRef Name="Employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IndexModelStoreContainer">
+          <EntitySet Name="BreakModels" EntityType="Self.BreakModels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeModels" EntityType="Self.EmployeeModels" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BreakModels_EmployeeModels" Association="Self.FK_BreakModels_EmployeeModels">
+            <End Role="EmployeeModels" EntitySet="EmployeeModels" />
+            <End Role="BreakModels" EntitySet="BreakModels" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IndexModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BreakModel">
+          <Key>
+            <PropertyRef Name="BreakId" />
+          </Key>
+          <Property Name="BreakId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee" Type="Int32" Nullable="false" />
+          <Property Name="TimeEntered" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeCleared" Type="DateTime" Precision="3" />
+          <Property Name="Position" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeModel" Relationship="Self.FK_BreakModels_EmployeeModels" FromRole="BreakModels" ToRole="EmployeeModels" />
+        </EntityType>
+        <EntityType Name="EmployeeModel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NotActive" Type="Boolean" />
+          <Property Name="Force" Type="Int32" />
+          <NavigationProperty Name="BreakModels" Relationship="Self.FK_BreakModels_EmployeeModels" FromRole="EmployeeModels" ToRole="BreakModels" />
+        </EntityType>
+        <Association Name="FK_BreakModels_EmployeeModels">
+          <End Role="EmployeeModels" Type="Self.EmployeeModel" Multiplicity="1" />
+          <End Role="BreakModels" Type="Self.BreakModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeModels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BreakModels">
+              <PropertyRef Name="Employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BreakModels" EntityType="Self.BreakModel" />
+          <EntitySet Name="EmployeeModels" EntityType="Self.EmployeeModel" />
+          <AssociationSet Name="FK_BreakModels_EmployeeModels" Association="Self.FK_BreakModels_EmployeeModels">
+            <End Role="EmployeeModels" EntitySet="EmployeeModels" />
+            <End Role="BreakModels" EntitySet="BreakModels" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IndexModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="BreakModels">
+            <EntityTypeMapping TypeName="IndexModel.BreakModel">
+              <MappingFragment StoreEntitySet="BreakModels">
+                <ScalarProperty Name="BreakId" ColumnName="BreakId" />
+                <ScalarProperty Name="Employee" ColumnName="Employee" />
+                <ScalarProperty Name="TimeEntered" ColumnName="TimeEntered" />
+                <ScalarProperty Name="TimeCleared" ColumnName="TimeCleared" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeModels">
+            <EntityTypeMapping TypeName="IndexModel.EmployeeModel">
+              <MappingFragment StoreEntitySet="EmployeeModels">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="NotActive" ColumnName="NotActive" />
+                <ScalarProperty Name="Force" ColumnName="Force" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

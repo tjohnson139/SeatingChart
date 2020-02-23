@@ -33,6 +33,6 @@ namespace SeatingChart.Models
         public bool NotActive { get; set; }
 
         [Display(Name = "Forced")]
-        public bool Force { get; set; }
+        public int Force { get; set; }
     }
 }

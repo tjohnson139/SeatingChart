@@ -45,7 +45,7 @@ namespace SeatingChart.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Employee,TimeEntered,TimeCleared")] BreakModels breakModels)
+        public ActionResult Create([Bind(Include = "BreakId,Employee,TimeEntered,TimeCleared")] BreakModels breakModels)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +71,7 @@ namespace SeatingChart.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Employee,TimeEntered,TimeCleared")] BreakModels breakModels)
+        public ActionResult Edit([Bind(Include = "BreakId,Employee,TimeEntered,TimeCleared")] BreakModels breakModels)
         {
             if (ModelState.IsValid)
             {

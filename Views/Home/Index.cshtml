@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SeatingChart.Models.BreakModels>
+﻿@model IEnumerable<SeatingChart.Models.HomeIndexViewModels>
 
 @{
     Layout = null;
@@ -7,9 +7,9 @@
 @Html.Partial("_Header")
 
     <div class="container_lists">
-        <div class="container_break col-md-6">
+        <div class="container_break col-md-8">
             <h5 style="text-align:center">Break List</h5>
-            <table class="table-bordered col-md-12">
+            <table class="table-bordered col-lg-12">
                 @if (Model != null)
                 {
                     foreach (var item in Model)
@@ -18,10 +18,13 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.EmployeeModels.DisplayName)
+                                    @Html.DisplayFor(modelItem => item.DisplayName)
                                 </td>
                                 <td>
-                                    @item.TimeEntered.ToString("HH:mm")
+                                    &ensp;BV
+                                </td>
+                                <td>
+                                    &ensp;@item.TimeEntered.ToString("HH:mm")
                                 </td>
                             </tr>
                         }
