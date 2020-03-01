@@ -35,6 +35,7 @@ namespace SeatingChart.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             EmployeeModels employeeModels = db.EmployeeModels.Find(id);
+            
             if (employeeModels == null)
             {
                 return HttpNotFound();
@@ -45,14 +46,11 @@ namespace SeatingChart.Controllers
         // GET: Employee/Create
         public ActionResult Create()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return View();
-            }
-            else
+            if (User.Identity.IsAuthenticated == false)
             {
                 return View("NotAuthorized");
             }
+            return View();
         }
 
         // POST: Employee/Create
@@ -133,10 +131,13 @@ namespace SeatingChart.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             EmployeeModels employeeModels = db.EmployeeModels.Find(id);
+            // Don't actually delete - the record needs to be maintained for required record retention
             employeeModels.NotActive = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
 
         protected override void Dispose(bool disposing)
         {

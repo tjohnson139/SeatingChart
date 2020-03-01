@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,7 +11,11 @@ namespace SeatingChart.Models
             //Break Model
             public int BreakId { get; set; }
             public int Employee { get; set; }
+
+            [DataType(DataType.DateTime)]
             public DateTime TimeEntered { get; set; }
+
+            [DataType(DataType.DateTime)]
             public DateTime? TimeCleared { get; set; }
 
             //Employee Model
@@ -20,5 +25,6 @@ namespace SeatingChart.Models
             public string LastName { get; set; }
             public bool NotActive { get; set; }
             public int Force { get; set; }
+
         }
 }

@@ -10640,3 +10640,9 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 .formBuffer {
     margin-top: 1em;
 }
+
+.index-dropdown {
+    width: 8em;
+    height: 1.5em;
+    text-align: center;
+}

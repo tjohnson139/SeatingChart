@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using SeatingChart.Models;
-using System.Configuration;
-using System.Windows;
-using System.Windows.Forms;
-using System.Data.SqlClient;    
 
 namespace SeatingChart.Controllers
 {
@@ -19,39 +11,59 @@ namespace SeatingChart.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Employee
+        // Sets up the information for the table on the main page
         public ActionResult Index()
         {
+            var breaks = db.BreakModels
+                                .Include("Employee")
+                                .Include("TimeEntered")
+                                .Include("TimeCleared")
+                                .Include("DisplayName")
+                                .Select(a => new HomeIndexViewModels
+                                {
+                                    Employee = a.Employee,
+                                    DisplayName = a.EmployeeModels.DisplayName,
+                                    TimeEntered = a.TimeEntered,
+                                    TimeCleared = a.TimeCleared.Value,
+                                });
 
-        var breaks = db.BreakModels
-                            .Include("Employee")
-                            .Include("TimeEntered")
-                            .Include("TimeCleared")
-                            .Include("DisplayName")
-                            .Select(a => new HomeIndexViewModels
-                            {
-                                Employee = a.Employee,
-                                DisplayName = a.EmployeeModels.DisplayName,
-                                TimeEntered = a.TimeEntered,
-                                TimeCleared = a.TimeCleared.Value,
-                            });
-        return View(breaks);
-
+            ViewBag.EmployeeNames = db.EmployeeModels.Where(x => x.NotActive == false).ToList();
+            return View(breaks);
         }
 
-        public ActionResult DropDown()
+        //Adds employees to the break list from the dropdown on the index page
+        [System.Web.Http.HttpPost]
+        public ActionResult CreateData(BreakModels breakmodels)
         {
-        var nameDrop = db.EmployeeModels
-                            .Include("DisplayName")
-                            .Include("NotActive")
-                            .Select(a => new HomeIndexViewModels {
-                                DisplayName = a.DisplayName,
-                                NotActive = a.NotActive,
-                            });
-            
-        return View(nameDrop);
+            try
+            {
+                breakmodels.TimeEntered = DateTime.Now;
+                db.BreakModels.Add(breakmodels);
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
         }
 
-            public ActionResult Login()
+        [System.Web.Http.HttpPost]
+        public ActionResult DeleteBreak(BreakModels breakmodels)
+        {
+            try
+            {
+                breakmodels.TimeCleared = DateTime.Now;
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
+        }
+
+        public ActionResult Login()
         {
             return View();
         }
@@ -116,6 +128,7 @@ namespace SeatingChart.Controllers
         }
 
 
+        // Returns the no authorization page
         public ActionResult NotAuthorized()
         {
             return View();

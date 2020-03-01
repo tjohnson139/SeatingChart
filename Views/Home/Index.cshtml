@@ -2,50 +2,76 @@
 
 @{
     Layout = null;
+    var employees = new List<SeatingChart.Models.EmployeeModels>();
+    employees = (List<SeatingChart.Models.EmployeeModels>)ViewBag.EmployeeNames;
 }
 
 @Html.Partial("_Header")
 
-    <div class="container_lists">
-        <div class="container_break col-md-8">
-            <h5 style="text-align:center">Break List</h5>
-            <table class="table-bordered col-lg-12">
-                @if (Model != null)
+<div class="container_lists">
+    <div class="container_break col-md-6">
+        <h5 style="text-align:center">Break List</h5>
+        <table class="table-bordered col-lg-12">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
                 {
-                    foreach (var item in Model)
+                    if (item.TimeCleared == null)
                     {
-                        if (item.TimeCleared == null)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DisplayName)
-                                </td>
-                                <td>
-                                    &ensp;BV
-                                </td>
-                                <td>
-                                    &ensp;@item.TimeEntered.ToString("HH:mm")
-                                </td>
-                            </tr>
-                        }
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DisplayName)
+                            </td>
+                            <td>
+                                &ensp;BV
+                            </td>
+                        </tr>
                     }
                 }
-            </table>
-            <form>
-                <div class="form formBuffer" style="text-align:center">
-                    <div class="col-med-12">
-                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                            <option selected>---Dispatcher---</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <div class="col-med-12 formBuffer">
-                        <button type="submit" class="btn btn-secondary btn-sm">Submit</button>
-                    </div>
-                </div>
-            </form>
+            }
+        </table>
+        <div class="form formBuffer" style="text-align:center">
+            <div class="col-med-6">
+                <select class="index-dropdown" id="employeeId">
+                    <option value="" selected>-- Dispatcher --</option>
+                    @foreach (var employeeName in employees)
+                    {
+                        <option value="@employeeName.Id">@employeeName.DisplayName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-med-12 formBuffer">
+                <button id="submit-form" class="btn btn-secondary btn-sm">Submit</button>
+            </div>
+            <input type="hidden" id="test" value="12" />
         </div>
     </div>
 </div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#submit-form").click(function () {
+            var model = {};
+            model.Employee = Number($("#employeeId").val());
+            console.log("model", model);
+            $.ajax({
+                type: "HttpPost",
+                url: "/Home/CreateData",
+                dataType: 'json',
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.success)
+                        window.location.href = "/Home/Index";
+                    else
+                        alert("Something went wrong. What is this? TriTech?");
+                },
+                error: function () {
+                    alert("Something went wrong. What is this? Tritech?");
+                }
+            });
+        });
+    });
+</script>

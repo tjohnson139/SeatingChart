@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 
+
 namespace SeatingChart.Models
 {
     public class EmployeeModels

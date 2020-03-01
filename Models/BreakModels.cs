@@ -11,7 +11,6 @@ namespace SeatingChart.Models
     public class BreakModels
     {
         [Key]
-        [Required]
         [Display(Name = "Break Database ID")]
         public int BreakId { get; set; }
 
@@ -22,12 +21,14 @@ namespace SeatingChart.Models
 
         [Required]
         [Display(Name = "Time on the List")]
+        [DataType(DataType.DateTime)]
         public DateTime TimeEntered { get; set; }
 
-        [Required]
         [Display(Name = "Time cleared from the list")]
+        [DataType(DataType.DateTime)]
         public DateTime? TimeCleared { get; set; }
 
+        // Link to the EmployeeModels Model
         public virtual EmployeeModels EmployeeModels { get; set; }
     }
 }
