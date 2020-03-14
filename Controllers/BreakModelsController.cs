@@ -86,17 +86,27 @@ namespace SeatingChart.Controllers
         // GET: BreakModels/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             BreakModels breakModels = db.BreakModels.Find(id);
-            return View(breakModels);
+            if (breakModels == null)
+            {
+                return HttpNotFound();
+            }
+            return View("Home");
         }
 
-        // POST: BreakModels/Delete/5
+        // POST: Employee/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             BreakModels breakModels = db.BreakModels.Find(id);
-            db.BreakModels.Remove(breakModels);
+            // Don't actually delete - the record needs to be maintained for required record retention
+            breakModels.TimeCleared = DateTime.Now;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
