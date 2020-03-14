@@ -51,16 +51,9 @@ namespace SeatingChart.Controllers
         [System.Web.Http.HttpPost]
         public ActionResult DeleteBreak(BreakModels breakmodels)
         {
-            try
-            {
-                breakmodels.TimeCleared = DateTime.Now;
-                db.SaveChanges();
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false });
-            }
+            breakmodels.TimeCleared = DateTime.Now;
+            db.SaveChanges();
+            return View();
         }
 
         public ActionResult Login()
@@ -105,14 +98,7 @@ namespace SeatingChart.Controllers
 
         public ActionResult Delete()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return View();
-            }
-            else
-            {
-                return View("NotAuthorized");
-            }
+            return View("");
         }
 
         public ActionResult Create()

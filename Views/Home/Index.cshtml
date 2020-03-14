@@ -20,7 +20,7 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.DisplayName)
+                                @Html.ActionLink(item.DisplayName, "DeleteBreak", new { Id = item.Id })
                             </td>
                             <td>
                                 &ensp;BV

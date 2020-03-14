@@ -23,6 +23,8 @@ namespace SeatingChart.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        internal object breaks;
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -36,5 +38,6 @@ namespace SeatingChart.Models
         public System.Data.Entity.DbSet<SeatingChart.Models.EmployeeModels> EmployeeModels { get; set; }
 
         public System.Data.Entity.DbSet<SeatingChart.Models.BreakModels> BreakModels { get; set; }
+        public object BreakModel { get; internal set; }
     }
 }

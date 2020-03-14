@@ -1,0 +1,19 @@
+﻿@model SeatingChart.Models.BreakModels
+
+@{
+    Layout = null;
+}
+
+@Html.Partial("_Header")
+
+    <h3>Remove @Html.DisplayFor(model => model.EmployeeModels.DisplayName) from the break list? </h3>
+    <div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <button class="btn btn-secondary" onclick="HiddenValue()">Delete</button>
+            <a href="../Home/Index" class="btn btn-secondary" style="margin-left:1em;">Cancel</a>
+        }
+    </div>
