@@ -14,13 +14,14 @@ namespace SeatingChart.Controllers
         // Sets up the information for the table on the main page
         public ActionResult Index()
         {
-            var breaks = db.BreakModels
+            var breaks = db.BreakModels.Include("BreakId")
                                 .Include("Employee")
                                 .Include("TimeEntered")
                                 .Include("TimeCleared")
                                 .Include("DisplayName")
                                 .Select(a => new HomeIndexViewModels
                                 {
+                                    BreakId=a.BreakId,
                                     Employee = a.Employee,
                                     DisplayName = a.EmployeeModels.DisplayName,
                                     TimeEntered = a.TimeEntered,
@@ -48,20 +49,21 @@ namespace SeatingChart.Controllers
             }
         }
 
-        [System.Web.Http.HttpPost]
-        public ActionResult DeleteBreak(BreakModels breakmodels)
+        [HttpPost]
+        public ActionResult DeleteBreak(int breakID)
         {
-            try
-            {
-                breakmodels.TimeCleared = DateTime.Now;
-                db.SaveChanges();
-                return Json(new { success = true });
+            try { 
+            var oldBreakModel = db.BreakModels.Where(x => x.BreakId == breakID).FirstOrDefault();
+            oldBreakModel.TimeCleared = DateTime.Now;
+
+            return Json(db.SaveChanges() > 0, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch(Exception)
             {
-                return Json(new { success = false });
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
+        
 
         public ActionResult Login()
         {
