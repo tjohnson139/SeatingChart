@@ -571,12 +571,6 @@ pre {
     margin-left: auto;
 }
 
-/* Container for break/dth and lunch lists*/
-.container_lists {
-    max-width: 25%;
-    margin-left: 1em;
-    margin-top: 1em;
-}
 
 /*Headings for break/dth/lunches*/
 .header_break {
@@ -10646,3 +10640,4 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
     height: 1.5em;
     text-align: center;
 }
+
